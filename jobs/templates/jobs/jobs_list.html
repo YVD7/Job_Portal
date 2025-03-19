@@ -1,0 +1,13 @@
+<form method="GET">
+    <input type="text" name="location" placeholder="Search by location">
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for job in jobs %}
+    <li>
+        <a href="{% url 'job_detail' job.id %}">{{ job.title }}</a>
+        <p>{{ job.location }}</p>
+    </li>
+    {% endfor %}
+</ul>

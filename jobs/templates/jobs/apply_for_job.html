@@ -1,0 +1,5 @@
+<h3>Apply for {{ job.title }}</h3>
+<form method="POST">
+    {% csrf_token %}
+    <button types="submit">Apply</button>
+</form>

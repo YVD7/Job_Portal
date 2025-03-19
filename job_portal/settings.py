@@ -9,18 +9,26 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
+import pymysql
+
+from dotenv import load_dotenv
 
 from pathlib import Path
+
+# Mysql connection
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-wi2!$99c(4h9&5@&moy$x(t@)n%p%bs1^6(fb6mc1fzfynq2k)"
+SECRET_KEY=os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "jobs",
 ]
 
 MIDDLEWARE = [
@@ -74,9 +83,15 @@ WSGI_APPLICATION = "job_portal.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "default": {
+ #       "ENGINE": "django.db.backends.sqlite3",
+ #       "NAME": BASE_DIR / "db.sqlite3",
+         "ENGINE": "django.db.backends.mysql",
+         "NAME": os.getenv("MYSQL_DATABASE"),
+         "USER": os.getenv("MYSQL_USER"),
+         "PASSWORD": os.getenv("MYSQL_PASSWD"),
+         "HOST": os.getenv("MYSQL_HOST"),
+         "PORT": os.getenv("MYSQL_PORT"),
     }
 }
 
@@ -121,3 +136,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
